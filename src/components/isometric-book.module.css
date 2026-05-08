@@ -1,0 +1,206 @@
+.frame {
+  --iso-width: 180px;
+  --iso-height: calc(var(--iso-width) * 1.42);
+  --iso-depth: calc(var(--iso-width) * 0.075);
+  --iso-radius: 3px;
+  --iso-cover: #0f3a73;
+  --iso-cover-dark: color-mix(in srgb, var(--iso-cover) 72%, black);
+  --iso-cover-light: color-mix(in srgb, var(--iso-cover) 82%, white);
+  --iso-text: #ffffff;
+  --iso-pages: #f4f4f2;
+  --iso-page-lines: rgba(20, 20, 20, 0.18);
+  --iso-rotation: -28deg;
+
+  position: relative;
+  display: inline-grid;
+  width: calc(var(--iso-width) * 1.54);
+  min-width: calc(var(--iso-width) * 1.54);
+  height: calc(var(--iso-width) * 1.1);
+  place-items: center;
+  perspective: 900px;
+}
+
+.book {
+  position: relative;
+  width: var(--iso-width);
+  height: var(--iso-height);
+  transform: rotateX(58deg) rotateZ(var(--iso-rotation));
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition:
+    filter 200ms ease,
+    transform 200ms ease;
+}
+
+.frame:hover .book {
+  filter: saturate(1.05);
+  transform: rotateX(58deg) rotateZ(var(--iso-rotation)) translateZ(8px);
+}
+
+.pageBlock,
+.cover,
+.foreEdge,
+.footEdge,
+.spineEdge {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.pageBlock {
+  inset: 0;
+  border: 1px solid rgba(0, 0, 0, 0.48);
+  border-radius: var(--iso-radius);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent 8%, transparent 92%, rgba(0, 0, 0, 0.1)),
+    var(--iso-pages);
+  transform: translateZ(0);
+}
+
+.cover {
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.46);
+  border-radius: var(--iso-radius);
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.22), transparent 16%, transparent 72%, rgba(0, 0, 0, 0.2)),
+    linear-gradient(180deg, var(--iso-cover-light), var(--iso-cover) 38%, var(--iso-cover-dark));
+  color: var(--iso-text);
+  transform: translateZ(var(--iso-depth));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -18px 24px rgba(0, 0, 0, 0.12);
+}
+
+.cover::before {
+  position: absolute;
+  inset: calc(var(--iso-width) * 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 2px;
+  content: "";
+}
+
+.cover::after {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 12px 12px;
+  mix-blend-mode: soft-light;
+  opacity: 0.28;
+  content: "";
+}
+
+.foreEdge {
+  top: 0;
+  left: 100%;
+  width: var(--iso-depth);
+  height: var(--iso-height);
+  border: 1px solid rgba(0, 0, 0, 0.46);
+  border-left: 0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 5px,
+      var(--iso-page-lines) 5.5px,
+      transparent 6px
+    ),
+    linear-gradient(90deg, #fbfbfa, #d9d9d6);
+  transform: rotateY(90deg);
+  transform-origin: left center;
+}
+
+.footEdge {
+  top: 100%;
+  left: 0;
+  width: var(--iso-width);
+  height: var(--iso-depth);
+  border: 1px solid rgba(0, 0, 0, 0.46);
+  border-top: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 7px,
+      var(--iso-page-lines) 7.5px,
+      transparent 8px
+    ),
+    linear-gradient(180deg, #fbfbfa, #d8d8d4);
+  transform: rotateX(-90deg);
+  transform-origin: top center;
+}
+
+.spineEdge {
+  top: 0;
+  left: 0;
+  width: calc(var(--iso-width) * 0.085);
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14), transparent 42%, rgba(0, 0, 0, 0.28)),
+    var(--iso-cover-dark);
+  transform: translateZ(calc(var(--iso-depth) + 0.5px));
+}
+
+.shadow {
+  position: absolute;
+  inset: 29% 10% 17% 10%;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.26);
+  filter: blur(16px);
+  transform: rotate(var(--iso-rotation)) skewX(-12deg);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: calc(var(--iso-width) * 0.035);
+  padding: calc(var(--iso-width) * 0.13) calc(var(--iso-width) * 0.14);
+  text-align: left;
+}
+
+.title {
+  max-width: 85%;
+  font-size: calc(var(--iso-width) * 0.095);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.author {
+  max-width: 82%;
+  font-size: calc(var(--iso-width) * 0.058);
+  line-height: 1.25;
+  opacity: 0.78;
+  text-wrap: balance;
+}
+
+.mark {
+  position: absolute;
+  right: calc(var(--iso-width) * 0.11);
+  bottom: calc(var(--iso-width) * 0.1);
+  z-index: 1;
+  width: calc(var(--iso-width) * 0.14);
+  height: calc(var(--iso-width) * 0.14);
+  border-radius: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0)),
+    color-mix(in srgb, var(--iso-cover) 58%, white);
+  opacity: 0.78;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book {
+    transition: none;
+  }
+
+  .frame:hover .book {
+    transform: rotateX(58deg) rotateZ(var(--iso-rotation));
+  }
+}

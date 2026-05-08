@@ -1,0 +1,45 @@
+{
+  "name": "@heroui-pro/template-dashboard",
+  "private": true,
+  "version": "1.0.4",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3003",
+    "build": "next build",
+    "start": "next start --port 3003",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .next node_modules .turbo dist"
+  },
+  "exports": {
+    "./src/*": "./src/*.tsx",
+    "./src/data/*": "./src/data/*.ts",
+    "./src/nav-items": "./src/nav-items.ts"
+  },
+  "dependencies": {
+    "@gravity-ui/icons": "2.18.0",
+    "@heroui-pro/react": "latest",
+    "@heroui/react": "3.0.3",
+    "@heroui/styles": "3.0.3",
+    "firebase": "^12.6.0",
+    "firebase-admin": "^13.6.0",
+    "next": "16.2.3",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "recharts": "3.8.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.2.2",
+    "@types/node": "24.7.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "postcss": "8.5.9",
+    "tailwindcss": "4.2.2",
+    "typescript": "5.9.3",
+    "@eslint/eslintrc": "^3.2.0",
+    "eslint-config-next": "16.2.3",
+    "eslint": "^9.0.0"
+  }
+}

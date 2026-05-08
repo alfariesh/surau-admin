@@ -1,0 +1,236 @@
+.container {
+  --background-200: 0 0% 98%;
+  --gray-1000: 0 0% 9%;
+  --gray-200: 0 0% 92%;
+  --gray-alpha-400: rgba(0, 0, 0, 0.08);
+  --amber-600: 36 90% 62%;
+  --shadow-book: 0 1px 1px 0 rgba(0, 0, 0, 0.02), 0 4px 8px -4px rgba(0, 0, 0, 0.1),
+    0 16px 24px -8px rgba(0, 0, 0, 0.03);
+
+  display: inline-block;
+  width: fit-content;
+  perspective: 900px;
+  transition: transform 250ms ease-out;
+}
+
+.container:hover > .book {
+  transform: rotateY(-20deg) scale(1.03);
+}
+
+.book {
+  position: relative;
+  aspect-ratio: 49 / 60;
+  width: fit-content;
+  min-width: calc(var(--book-width) * 1px);
+  transform: rotate(0);
+  transform-origin: center left;
+  transform-style: preserve-3d;
+  container-type: inline-size;
+  transition: transform 250ms ease-out;
+}
+
+.front {
+  position: relative;
+  display: flex;
+  width: calc(var(--book-width) * 1px);
+  min-width: calc(var(--book-width) * 1px);
+  height: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 6px 4px 4px 6px;
+  background-color: hsl(var(--background-200));
+  box-shadow: var(--shadow-book);
+  transform: translateZ(0);
+}
+
+.front::after {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--gray-alpha-400);
+  border-radius: inherit;
+  box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+  content: "";
+}
+
+.stripe {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex: 1 1 0%;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0.5rem;
+  overflow: hidden;
+  background: var(--book-color);
+  transform: translateZ(0);
+}
+
+.body {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex: 1 1 0%;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.simpleColor {
+  background: var(--book-color);
+}
+
+.bind {
+  position: absolute;
+  width: 8.2%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 12%,
+      rgba(255, 255, 255, 0.25) 29.25%,
+      rgba(255, 255, 255, 0) 50.5%,
+      rgba(255, 255, 255, 0) 75.25%,
+      rgba(255, 255, 255, 0.25) 91%,
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.03),
+      rgba(0, 0, 0, 0.1) 12%,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0.02) 50%,
+      rgba(0, 0, 0, 0.2) 73.5%,
+      rgba(0, 0, 0, 0.5) 75.25%,
+      rgba(0, 0, 0, 0.15) 85.25%,
+      rgba(0, 0, 0, 0)
+    );
+  mix-blend-mode: overlay;
+}
+
+.bodyBind {
+  opacity: 0.2;
+}
+
+.bodyBindStrong {
+  opacity: 1;
+}
+
+.stripeIllustration {
+  width: 100%;
+  object-fit: cover;
+}
+
+.bodyIllustration {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 6.1%;
+  padding-left: 14.2%;
+  color: var(--book-text-color);
+  container-type: inline-size;
+  object-fit: cover;
+}
+
+.bodyIllustrationSimple {
+  gap: calc((16px / var(--book-default-width)) * var(--book-width));
+}
+
+.bodyIllustrationStripe {
+  justify-content: space-between;
+  gap: calc((16px / var(--book-default-width)) * var(--book-width));
+}
+
+.title {
+  font-family: "Geist Sans", sans-serif;
+  font-size: 10.5cqw;
+  font-weight: 600;
+  line-height: 1.25em;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.textured {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: var(--book-border-radius);
+  background-image: url("/geist/book-texture.avif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: brightness(1.1);
+  mix-blend-mode: hard-light;
+  opacity: 0.5;
+  transform: rotate(180deg);
+}
+
+.pages {
+  position: absolute;
+  top: 3px;
+  width: calc(29cqw - 2px);
+  height: calc(100% - 2 * 3px);
+  background: linear-gradient(90deg, #eaeaea, transparent 70%), linear-gradient(#fff, #fafafa);
+  transform: translateX(calc(var(--book-width) * 1px - 29cqw / 2 - 3px)) rotateY(90deg)
+    translateX(calc(29cqw / 2));
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: calc(var(--book-width) * 1px);
+  height: 100%;
+  border-radius: 6px 4px 4px 6px;
+  transform: translateZ(calc(-1 * 29cqw));
+}
+
+.backDefault {
+  background-color: hsl(var(--gray-200));
+}
+
+.backColored {
+  background: var(--book-color);
+}
+
+:global(.dark) .container {
+  --background-200: 0 0% 0%;
+  --gray-1000: 0 0% 93%;
+  --gray-200: 0 0% 12%;
+  --gray-alpha-400: hsla(0, 0%, 100%, 0.14);
+  --amber-600: 39 85% 49%;
+  --shadow-book: 0 1.8px 3.6px rgba(0, 0, 0, 0.05), 0 10.8px 21.6px rgba(0, 0, 0, 0.08),
+    inset 0 -0.9px 0 rgba(0, 0, 0, 0.1), inset 0 1.8px 1.8px rgba(255, 255, 255, 0.1),
+    inset 3.6px 0 3.6px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark) .front {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0)
+    ),
+    hsla(0, 0%, 12%, 1);
+}
+
+:global(.dark) .front::after {
+  border: none;
+}
+
+:global(.dark) .textured {
+  filter: brightness(1);
+  opacity: 1;
+}
+
+@supports (-webkit-tap-highlight-color: transparent) {
+  .textured {
+    filter: brightness(1);
+    opacity: 0.3;
+  }
+}
